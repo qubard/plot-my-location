@@ -15,18 +15,6 @@
 </style>
 <div id="map"></div>
 <script>
-    function initMap() {
-        mapboxgl.accessToken = 'pk.eyJ1IjoidGFyYXNncml0c2Vua28iLCJhIjoiY2pueG84OWR3MTMydDNwcndkc2Nla3JzcyJ9.o08Y0fXney9VoeqmdAI-bg';
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v10',
-            center: [-74.50, 40], // starting position [lng, lat]
-            zoom: 9 // starting zoom
-        });
-    }
-</script>
-
-<script>
 function pointOnCircle(lng, lat, radius) {
     return {
         "type": "Point",
@@ -36,56 +24,64 @@ function pointOnCircle(lng, lat, radius) {
     };
 }
 
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see the error "The Geolocation service
-// failed.", it means you probably did not give permission for the browser to
-// locate you.
-var map, infoWindow;
-function initMap() {
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
+mapboxgl.accessToken = 'pk.eyJ1IjoidGFyYXNncml0c2Vua28iLCJhIjoiY2pueG84OWR3MTMydDNwcndkc2Nla3JzcyJ9.o08Y0fXney9VoeqmdAI-bg';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v10',
+    zoom: 14
+});
 
-        mapboxgl.accessToken = 'pk.eyJ1IjoidGFyYXNncml0c2Vua28iLCJhIjoiY2pueG84OWR3MTMydDNwcndkc2Nla3JzcyJ9.o08Y0fXney9VoeqmdAI-bg';
-        var map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v10',
-            center: [pos.lng, pos.lat], // starting position [lng, lat]
-            zoom: 9 // starting zoom
+function initMap() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            handleLocation(pos);
+        }, function() {
+            handleLocationError(true, pos);
         });
-        
-        map.on('load', function() {
-            map.addSource('point', {
-                "type": "geojson",
-                "data": pointOnCircle(pos.lng, pos.lat, 20)
-            });
-            
-            map.addLayer({
-                "id": "point",
-                "source": "point",
-                "type": "circle",
-                "paint": {
-                    "circle-radius": 10,
-                    "circle-color": "#007cbf"
-                }
-            });
-        });
-        
-      }, function() {
-        handleLocationError(true, infoWindow, map.getCenter());
-      });
     } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
+        // Browser doesn't support Geolocation
+        handleLocationError(false, null);
     }
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    console.log(pos, browserHasGeolocation, infoWindow);
+function addPoint(pos) {
+    console.log("Added point", pos);
+    
+    map.addSource('point', {
+        "type": "geojson",
+        "data": pointOnCircle(pos.lng, pos.lat, 20)
+    });
+        
+    map.addLayer({
+        "id": "point",
+        "source": "point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": 10,
+            "circle-color": "#007cbf"
+        }
+    });
+    
+    map.setCenter([pos.lng, pos.lat]);
+}
+
+function handleLocation(pos) {
+    // Make sure when the map finishes loading, i
+    if (!map.loaded()) {
+        map.on('load', function() {
+            addPoint(pos);
+        });
+    } else {
+        addPoint(pos);
+    }
+}
+
+function handleLocationError(browserHasGeolocation, pos) {
+    console.log(browserHasGeolocation, pos);
 }
 </script>
 <script async defer
