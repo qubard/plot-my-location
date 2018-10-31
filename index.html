@@ -17,17 +17,19 @@
 <script>
 function pointOnCircle(lng, lat, radius) {
     return {
-        "type": "Point",
-        "coordinates": [
-            lng, lat
-        ]
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                lng, lat
+            ]
+        }
     };
 }
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFyYXNncml0c2Vua28iLCJhIjoiY2pueG84OWR3MTMydDNwcndkc2Nla3JzcyJ9.o08Y0fXney9VoeqmdAI-bg';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v10',
+    style: 'mapbox://styles/mapbox/dark-v9',
     zoom: 14
 });
 
@@ -48,16 +50,32 @@ function initMap() {
     }
 }
 
-function addPoint(pos) {
+function addPoint(pos, title) {
     console.log("Added point", pos);
-    
+
     map.addSource('point', {
         "type": "geojson",
-        "data": pointOnCircle(pos.lng, pos.lat, 20)
+        data: {
+           "type": "FeatureCollection",
+           "features": [{
+               "type": "Feature",
+               "properties": {
+                    "title": "Mapbox DC",
+                    "marker-symbol": "monument"
+               },
+               "geometry": {
+                   "type": "Point",
+                   "coordinates": [
+                       pos.lng,
+                       pos.lat
+                   ]
+               }
+           }]
+        }
     });
-        
+    
     map.addLayer({
-        "id": "point",
+        "id": "point-markers",
         "source": "point",
         "type": "circle",
         "paint": {
@@ -66,6 +84,22 @@ function addPoint(pos) {
         }
     });
     
+    /*map.addLayer({
+        id: "point-labels",
+        type: "symbol",
+        source: "point",
+        layout: {
+            "text-field": "You",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-size": 16
+        },
+        paint: {
+            "text-halo-color": "#FFFFFF",
+            "text-halo-width": 1,
+            "text-halo-blur": 2
+        }
+    });*/
+    
     map.setCenter([pos.lng, pos.lat]);
 }
 
@@ -73,10 +107,10 @@ function handleLocation(pos) {
     // Make sure when the map finishes loading, i
     if (!map.loaded()) {
         map.on('load', function() {
-            addPoint(pos);
+            addPoint(pos, "You");
         });
     } else {
-        addPoint(pos);
+        addPoint(pos, "You too");
     }
 }
 
