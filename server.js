@@ -65,5 +65,5 @@ app.get('/geojson', (req, res) => {
 });
 
 http.listen(3005, () => {
-    console.log('listening on *:3000');
+    console.log('listening on *:3005');
 });
