@@ -5,7 +5,6 @@ uses [mapbox](https://www.mapbox.com) and [google geolocation](https://developer
 
 # TODOs
 
-- socket communication
-    - geojson stream of connections
-    - ssl?
-- sidebar functionality
+- enable ssl
+- react/angular for frontend
+- es6!!

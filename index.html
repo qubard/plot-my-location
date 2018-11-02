@@ -1,10 +1,13 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+<link href="https://fonts.googleapis.com/css?family=Libre+Franklin" rel="stylesheet">
 <style>
     body {
         margin: 0;
         padding: 0;
-        background-color: #EDEDED;
+        background-color: #404040;
+        font-family: 'Libre Franklin', sans-serif;
     }
     
     .container {
@@ -15,16 +18,46 @@
     #map {
         top: 0; 
         bottom: 0; 
-        width: 90%;
+        width: 85%;
         height: 100%;
-        border-right: 8px solid #404040;
+        padding-right: 8px;
+    }
+    
+    #sidebar {
+        padding: 10px;
+        padding-top: 0px;
+        font-size: 16px;
+        line-height: 14px;
+        color: #FFF;
+        width: 15%;
+    }
+    
+    #sidebar .agent {
+        background-color: #333333;
+        padding-left: 4px;
+        padding-right: 4px;
+        margin: 0;
+    }
+    
+    #sidebar h3 {
+        text-align: center;
+    }
+
+    .dot {
+        height: 25px;
+        width: 25px;
+        background-color: #007cbf;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
     }
     
 </style>
 <div class="container">
     <div id="map"></div>
     <div id="sidebar">
-        2 People connected
+        <h3>Connected Agents</h3> 
+        <div class="sidebar-inner">No one connected.</div>
     </div>
 </div>
 <script src="socket.io/socket.io.js" type="text/javascript"></script>
