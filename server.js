@@ -17,15 +17,15 @@ io.on('connection', function (socket) {
     console.log(uuid, "connected", agents);
     
     socket.broadcast.emit('connected', agents);
-    
-    // Let the new agent know about the other agent(s)
-    socket.emit('agents', agents);
-    
+
     socket.on('position', (position) => {
         console.log("got position from", uuid, position);
         
         // Add the agent to our dictionary with their position
         agents[uuid] = position;
+        
+        // Let the new agent know about the other agent(s)
+        socket.emit('agents', agents);
     });
     
     socket.on('disconnect', () => {
