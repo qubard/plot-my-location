@@ -1,0 +1,27 @@
+{
+  "name": "plot-my-location",
+  "version": "1.0.0",
+  "description": "web app that you can open and plot your location on a map with everyone else(s).",
+  "main": "map.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qubard/plot-my-location.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qubard/plot-my-location/issues"
+  },
+  "homepage": "https://github.com/qubard/plot-my-location#readme"
+}
