@@ -53,7 +53,12 @@ function moveTo(ele) {
     
     // Move to the actual [lng, lat]
     if (pos && map.loaded()) {
-        map.setCenter([pos.lng, pos.lat]);
+        map.flyTo({
+            center: [pos.lng, pos.lat],
+            zoom: 14,
+            speed: 2,
+            curve: 1
+        });
     }
 }
 
