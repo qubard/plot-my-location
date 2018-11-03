@@ -9,7 +9,7 @@ Run the following commands
 
 ```
 npm install
-node.js server.js
+node server.js
 ```
 
 to install all the necessary dependencies into the `node_modules` directory and launch the server.
