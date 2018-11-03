@@ -12,7 +12,7 @@ app.use(express.static('public'))
 var agents = {};
 
 io.on('connection', function (socket) {
-    let uuid = uuidv1();
+    let uuid = uuidv1().split("-")[0];
 
     console.log(uuid, "connected", agents);
     

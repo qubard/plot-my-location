@@ -1,13 +1,21 @@
 var socket = io();
 
+var loadedAgents = null;
+
 socket.on('agents', (agents) => {
    // Built the HTML output for the sidebar of loaded agents
+   loadedAgents = agents;
+   
    let html = "";
    
    // todo: use react/angular for this
    for (uuid in agents) {
-       html += '<div class="agent"><p><span class="dot"></span> ' + uuid.split('-')[0] + '</p></div>'
+       html += '<div class="agent" onclick="moveTo(this)"><p class="uuid"><span class="dot"></span> ' + uuid + '</p></div>'
    }
    
    $('.sidebar-inner').html(html); 
+});
+
+socket.on('disconnect', () => {
+   $('.sidebar-inner').html("Lost connection to the server."); 
 });

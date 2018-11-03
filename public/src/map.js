@@ -25,14 +25,15 @@ function initMap() {
 
     map.on('load', () => {
         // Add the source first
-        map.addSource('point', {
+        map.addSource('agents', {
             "type": "geojson",
             data: GEOJSON_URL
         });
         
+        // Add the visual layer
         map.addLayer({
-            "id": "point-markers",
-            "source": "point",
+            "id": "agent-markers",
+            "source": "agents",
             "type": "circle",
             "paint": {
                 "circle-radius": 10,
@@ -43,6 +44,17 @@ function initMap() {
         // Every 5 seconds reload for new points
         window.setInterval(loadPoints, 5000);
     });
+}
+
+function moveTo(ele) {
+    var uuid = $(ele)[0].innerText;
+    
+    var pos = loadedAgents[uuid];
+    
+    // Move to the actual [lng, lat]
+    if (pos && map.loaded()) {
+        map.setCenter([pos.lng, pos.lat]);
+    }
 }
 
 function loadPoints() {
