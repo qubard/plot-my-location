@@ -12,6 +12,8 @@ socket.on('agents', (agents) => {
    for (uuid in agents) {
        html += '<div class="agent" onclick="moveTo(this)"><p class="uuid"><span class="dot"></span> ' + uuid + '</p></div>'
    }
+
+   console.log("Got agents", loadedAgents);
    
    $('.sidebar-inner').html(html); 
 });

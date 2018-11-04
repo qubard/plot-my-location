@@ -5,7 +5,8 @@ var map = new mapboxgl.Map({
     zoom: 14
 });
 
-var GEOJSON_URL = "http://localhost:3005/geojson";
+var GEOJSON_URL = "/geojson";
+var POLL_RATE = 5000; // polling rate in milliseconds
 
 function initMap() {
     if (navigator.geolocation) {
@@ -41,8 +42,9 @@ function initMap() {
             }
         });
         
+    console.log("Setting load interval.");
         // Every 5 seconds reload for new points
-        window.setInterval(loadPoints, 5000);
+        window.setInterval(loadPoints, POLL_RATE);
     });
 }
 
@@ -64,8 +66,13 @@ function moveTo(ele) {
 
 function loadPoints() {
     console.log("Queried for points");
-
-    map.getSource('point').setData(GEOJSON_URL);
+   
+    if (map.loaded()) {
+        var src = map.getSource('agents');
+        if (src) {
+                   src.setData(GEOJSON_URL);
+        }
+    }
 }
 
 function handleLocation(pos) {
@@ -77,4 +84,5 @@ function handleLocation(pos) {
 
 function handleLocationError(browserHasGeolocation, pos) {
     console.log(browserHasGeolocation, pos);
+    handleLocation({ lat : 0, lng : 0 }); // send dummy lat data
 }
