@@ -44,6 +44,7 @@ function initMap() {
         });
         
         console.log("Setting load interval.");
+        
         // Every 5 seconds reload for new points
         window.setInterval(loadPoints, POLL_RATE);
     });
@@ -51,7 +52,7 @@ function initMap() {
 
 function panTo(pos) {
     // Move to the actual [lng, lat]
-    if (pos && map.loaded()) {
+    if (pos) {
         map.flyTo({
             center: [pos.lng, pos.lat],
             zoom: 14,
@@ -59,16 +60,14 @@ function panTo(pos) {
             curve: 1
         });
     } else {
-        setTimeout(() => { panTo(pos) }, 500);
+        setTimeout(1000, () => { map.setCenter([pos.lng, pos.lat]) });
         console.log("Error panning, trying again.");
     }
 }
 
 function moveTo(ele) {
     var uuid = $(ele)[0].innerText;
-    
     var pos = loadedAgents[uuid];
-
     panTo(pos);
 }
 

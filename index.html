@@ -1,73 +1,37 @@
-<script src='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
-<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: #404040;
-        font-family: 'Nunito', sans-serif;
-    }
-    
-    .container {
-        display: flex;
-        flex-direction: row;
-    }
-    
-    #map {
-        top: 0; 
-        bottom: 0; 
-        width: 85%;
-        height: 100%;
-        padding-right: 8px;
-    }
-    
-    #sidebar {
-        padding: 10px;
-        padding-top: 0px;
-        font-size: 16px;
-        line-height: 14px;
-        color: #FFF;
-        width: 15%;
-    }
-    
-    #sidebar .agent {
-        background-color: #333333;
-        padding-left: 4px;
-        padding-right: 4px;
-        margin: 0;
-    }
-    
-    #sidebar .agent:hover {
-        transition: background-color 1s ease;
-        background-color: #606060;
-        cursor: pointer;
-    }
-    
-    #sidebar h3 {
-        text-align: center;
-    }
-
-    .dot {
-        height: 25px;
-        width: 25px;
-        background-color: #007cbf;
-        border-radius: 50%;
-        display: inline-block;
-        vertical-align: middle;
-    }
-</style>
-<div class="container">
-    <div id="map"></div>
-    <div id="sidebar">
-        <h3>Connected Agents</h3> 
-        <div class="sidebar-inner">No one connected.</div>
-    </div>
-</div>
-<script src="socket.io/socket.io.js" type="text/javascript"></script>
-<script src="src/map.js" type="text/javascript"></script>
-<script src="src/client.js" type="text/javascript"></script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
-</script>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>plot-my-location demo</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" media="screen and (min-width: 740px) and (orientation:landscape)" href="/css/mobile-landscape.css">
+    <link rel="stylesheet" media="screen and (min-width: 0px) and (orientation: portrait)" href="/css/mobile-portrait.css">
+    <link rel="stylesheet" media="screen and (min-width: 900px)" href="/css/widescreen.css">
+</head>
+<body>
+	<div class="container">
+	    <div id="map"></div>
+	    <div id="sidebar">
+            <h3>Connected Agents</h3> 
+            <div class="sidebar-inner">No one connected.</div>
+            <p><b>Tips</b><p>
+            <p>Click on the ids in the sidebar to visit them.</p>
+            <p><b>FAQ</b></p>
+            <p>1. People who don't reveal their location show up at (0,0) which is the ocean.</p>
+            <p>2. This uses sockets to send your position to the server and a <b>geojson</b> stream to constantly update markers on the map.</p>
+            <p>3. All traffic is encrypted using <b>letsencrypt</b>.</p>
+            <p>4. The domain name is dumb because I'm using one I have left over.</p>
+            <p>5. This won't work without <b>webgl</b> enabled in your browser.</p>
+	    </div>
+	</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js" type="text/javascript"></script>
+    <script src="src/client.js" type="text/javascript"></script>
+    <script src="src/map.js" type="text/javascript"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
+    </script>
+</body>
+</html>

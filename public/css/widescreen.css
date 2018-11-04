@@ -1,0 +1,60 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #404040;
+	font-family: 'Nunito', sans-serif;
+	overflow: hidden;
+}
+
+.container {
+	width: 100%;
+}
+
+#map {
+	float: left;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	overflow: hidden;
+	position: absolute;
+}
+
+#sidebar {
+	right: 0;
+	width: 15%;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px;
+	padding-top: 0px;
+	font-size: 14px;
+	min-width: 200px;
+	line-height: 14px;
+	color: #FFF;
+	overflow: hidden;
+}
+
+#sidebar .agent {
+	background-color: #333333;
+	padding-left: 4px;
+	padding-right: 4px;
+	margin: 0;
+}
+
+#sidebar .agent:hover {
+	transition: background-color 1s ease;
+	background-color: #606060;
+	cursor: pointer;
+}
+
+#sidebar h3 {
+	text-align: center;
+}
+
+.dot {
+	height: 25px;
+	width: 25px;
+	background-color: #007cbf;
+	border-radius: 50%;
+	display: inline-block;
+	vertical-align: middle;
+}

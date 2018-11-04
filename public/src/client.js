@@ -1,6 +1,7 @@
 var socket = io();
 
-var loadedAgents = null;
+// Global variable across states, doesn't work nicely 
+var loadedAgents = {};
 
 socket.on('agents', (agents) => {
    // Built the HTML output for the sidebar of loaded agents

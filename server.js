@@ -3,20 +3,23 @@ const app = express();
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+const cors = require('cors');
 const uuidv1 = require('uuid/v1');
 
 const options = {
-    cert: fs.readFileSync('fullchain.pem'),
-    key: fs.readFileSync('privkey.pem')
+	cert: fs.readFileSync('fullchain.pem'),
+	key: fs.readFileSync('privkey.pem')
 };
+
+app.use(cors());
+app.use(require('helmet')());
 
 http.createServer(app).listen(80);
 var server = https.createServer(options, app).listen(443);
 
 const io = require('socket.io').listen(server);
 
-app.use(require('helmet')());
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 var agents = {};
 
@@ -27,12 +30,12 @@ io.on('connection', function (socket) {
 
     socket.on('position', (position) => {
     console.log("got position from", uuid, position);
-        
+    
     // Add the agent to our dictionary with their position
     agents[uuid] = position;
-    
+	
     // Let the new agent know about the other agent(s)
-    socket.emit('agents', agents);
+	socket.emit('agents', agents);
         socket.broadcast.emit('agents', agents);
     });
     

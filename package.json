@@ -4,6 +4,7 @@
   "description": "web app that you can open and plot your location on a map with everyone else(s).",
   "main": "map.js",
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.4",
     "helmet": "^3.14.0",
     "socket.io": "^2.1.1",
