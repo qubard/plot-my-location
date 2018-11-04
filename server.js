@@ -15,6 +15,7 @@ var server = https.createServer(options, app).listen(443);
 
 const io = require('socket.io').listen(server);
 
+app.use(require('helmet')());
 app.use(express.static('public'))
 
 var agents = {};
