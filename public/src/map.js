@@ -2,7 +2,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGFyYXNncml0c2Vua28iLCJhIjoiY2pueG84OWR3MTMyd
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v9',
-    zoom: 14
+    center: [-122.43, 37.76], // San Franciso :sobbing:
+    zoom: 2
 });
 
 var GEOJSON_URL = "/geojson";
@@ -42,17 +43,13 @@ function initMap() {
             }
         });
         
-    console.log("Setting load interval.");
+        console.log("Setting load interval.");
         // Every 5 seconds reload for new points
         window.setInterval(loadPoints, POLL_RATE);
     });
 }
 
-function moveTo(ele) {
-    var uuid = $(ele)[0].innerText;
-    
-    var pos = loadedAgents[uuid];
-    
+function panTo(pos) {
     // Move to the actual [lng, lat]
     if (pos && map.loaded()) {
         map.flyTo({
@@ -61,7 +58,18 @@ function moveTo(ele) {
             speed: 2,
             curve: 1
         });
+    } else {
+        setTimeout(() => { panTo(pos) }, 500);
+        console.log("Error panning, trying again.");
     }
+}
+
+function moveTo(ele) {
+    var uuid = $(ele)[0].innerText;
+    
+    var pos = loadedAgents[uuid];
+
+    panTo(pos);
 }
 
 function loadPoints() {
@@ -70,13 +78,13 @@ function loadPoints() {
     if (map.loaded()) {
         var src = map.getSource('agents');
         if (src) {
-                   src.setData(GEOJSON_URL);
+            src.setData(GEOJSON_URL);
         }
     }
 }
 
 function handleLocation(pos) {
-    map.on('load', () => { map.setCenter([pos.lng, pos.lat]) });
+    map.on('load', () => { panTo(pos) });
         
     // Send the position to the server
     socket.emit('position', pos);
