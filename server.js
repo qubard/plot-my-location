@@ -35,7 +35,7 @@ io.on('connection', function (socket) {
     agents[uuid] = position;
 	
     // Let the new agent know about the other agent(s)
-	socket.emit('agents', agents);
+    socket.emit('agents', agents);
         socket.broadcast.emit('agents', agents);
     });
     
