@@ -16,9 +16,12 @@ socket.on('agents', (agents) => {
 
    console.log("Got agents", loadedAgents);
    
-   $('.sidebar-inner').html(html); 
+   $('.sidebar-inner').html(html);
 });
 
 socket.on('disconnect', () => {
    $('.sidebar-inner').html("Lost connection to the server."); 
+   
+   // Try to reconnect
+   socket.connect();
 });

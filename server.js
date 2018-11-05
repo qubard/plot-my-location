@@ -27,15 +27,18 @@ io.on('connection', function (socket) {
     let uuid = uuidv1().split("-")[0];
 
     console.log(uuid, "connected", agents);
-
-    socket.on('position', (position) => {
-    console.log("got position from", uuid, position);
     
-    // Add the agent to our dictionary with their position
-    agents[uuid] = position;
-	
     // Let the new agent know about the other agent(s)
     socket.emit('agents', agents);
+
+    socket.on('position', (position) => {
+        console.log("got position from", uuid, position);
+        
+        // Add the agent to our dictionary with their position
+        agents[uuid] = position;
+        
+        socket.emit('agents', agents);
+        
         socket.broadcast.emit('agents', agents);
     });
     
