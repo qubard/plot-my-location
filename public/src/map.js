@@ -7,9 +7,11 @@ var map = new mapboxgl.Map({
 });
 
 var GEOJSON_URL = "/geojson";
-var POLL_RATE = 5000; // polling rate in milliseconds
 
-function initMap() {
+var POLL_RATE = 5000; // polling rate in milliseconds
+var PING_RATE = 60000;
+
+function pingGeolocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
@@ -24,8 +26,15 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, null);
     }
+    console.log("Pinged geolocation.");
+}
 
+function initMap() {
     map.on('load', () => {
+        pingGeolocation();
+        
+        window.setInterval(pingGeolocation, PING_RATE);
+        
         // Add the source first
         map.addSource('agents', {
             "type": "geojson",
