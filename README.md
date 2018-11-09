@@ -1,5 +1,9 @@
 # plot-my-location
-web app that you can open and plot your location on a map with everyone else(s). 
+
+![License](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![GitHub](https://img.shields.io/badge/plotloc-deployed-brightgreen.svg)](https://plotloc.io)
+
+[plotloc](https://plotloc.io) is a web app that allows users to plot their location with everyone else. 
 
 uses [mapbox](https://www.mapbox.com) and [google geolocation](https://developers.google.com/maps/documentation/geolocation/intro)
 
